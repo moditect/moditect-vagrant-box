@@ -27,7 +27,7 @@ Change into the project directory, bootstrap the VM and SSH into it:
 
 ## Creating a modular runtime image based on Docker
 
-Clone the ModiTect repository and build ModiTect:
+Within the VM, clone the ModiTect repository and build ModiTect:
 
     git clone https://github.com/moditect/moditect.git
     cd moditect
