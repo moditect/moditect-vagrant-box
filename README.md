@@ -43,6 +43,23 @@ Run a Docker container based on that image:
 
 Access the Undertow service from your host machine at http://localhost:5678/.
 
+## Using the Fedora 26 Minimal Base image
+
+The Undertow example uses CentOS as a base for the Docker image. To use the
+Fedora 26 Minimal Base image instead, fetch and load that image:
+
+    wget -O - http://dl.fedoraproject.org/pub/fedora/linux/releases/26/Docker/x86_64/images/Fedora-Container-Minimal-Base-26-1.5.x86_64.tar.xz | docker load
+
+Then replace the following line in _integrationtest/undertow/src/main/docker/Dockerfile_:
+
+    FROM centos:7
+
+with
+
+    FROM fedora-container-minimal-base-26-1.5.x86_64
+
+This results in a smaller size of the Undertow example Docker image.
+
 ## License
 
 This project is licensed under the Apache License version 2.0.
