@@ -1,0 +1,58 @@
+---
+- hosts: all
+  become: yes
+  become_user: root
+  tasks:
+  - name: upgrade all packages
+    dnf: name="*" state=latest
+  - name: Have git, wget, ag, dnf-plugins-core, Java 1.8
+    dnf: name={{item}} state=latest
+    with_items:
+       - git
+       - wget
+       - the_silver_searcher
+       - dnf-plugins-core
+       - java-1.8.0-openjdk-devel
+  - name: Have Maven 3.5
+    unarchive:
+      src: http://mirror.netcologne.de/apache.org/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.tar.gz
+      dest: /home/vagrant
+      remote_src: True
+      creates: /home/vagrant/apache-maven-3.5.0
+  - name: Have Java 9
+    unarchive:
+      src: http://download.java.net/java/jdk9/archive/177/binaries/jdk-9+177_linux-x64_bin.tar.gz
+      dest: /home/vagrant
+      remote_src: True
+      creates: /home/vagrant/jdk-9
+  - name: Have Maven as alternative
+    alternatives:
+      name: mvn
+      link: /usr/bin/mvn
+      path: /home/vagrant/apache-maven-3.5.0/bin/mvn
+  - name: Have java 9 as alternative
+    alternatives:
+      name: java
+      link: /usr/bin/java
+      path: /home/vagrant/jdk-9/bin/java
+  - name: Have javac 9 as alternative
+    alternatives:
+      name: javac
+      link: /usr/bin/javac
+      path: /home/vagrant/jdk-9/bin/javac
+  - name: Have docker repo
+    shell:  'dnf config-manager \
+      --add-repo \
+      https://download.docker.com/linux/fedora/docker-ce.repo'
+  - name: Have dnf cache updated
+    shell: 'dnf makecache'
+  - name: Have docker-ce
+    dnf: name=docker-ce
+  - name: add docker group
+    group: name=docker state=present
+  - name: add user to docker group
+    user: name=vagrant groups=docker state=present
+  - name: Ensure Docker is started
+    systemd:
+      state: started
+      name: docker
