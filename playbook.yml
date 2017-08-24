@@ -5,13 +5,16 @@
   tasks:
   - name: upgrade all packages
     dnf: name="*" state=latest
-  - name: Have git, wget, ag, dnf-plugins-core, Java 1.8
+  - name: Have git, wget, ag, dnf-plugins-core, gpg, haveged, Java 1.8
     dnf: name={{item}} state=latest
     with_items:
        - git
        - wget
        - the_silver_searcher
-       - dnf-plugins-core
+       - dnf-plugins-corei
+       - gnupg
+       --- run sudo haveged --run=0 to fill entropy pool for key generation
+       - haveged
        - java-1.8.0-openjdk-devel
   - name: Have Maven 3.5
     unarchive:
@@ -21,7 +24,7 @@
       creates: /home/vagrant/apache-maven-3.5.0
   - name: Have Java 9
     unarchive:
-      src: http://download.java.net/java/jdk9/archive/177/binaries/jdk-9+177_linux-x64_bin.tar.gz
+      src: http://download.java.net/java/jdk9/archive/181/binaries/jdk-9+181_linux-x64_bin.tar.gz
       dest: /home/vagrant
       remote_src: True
       creates: /home/vagrant/jdk-9
