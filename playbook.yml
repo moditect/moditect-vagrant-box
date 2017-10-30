@@ -27,7 +27,7 @@
     get_url:
       url: http://download.oracle.com/otn-pub/java/jdk/9.0.1+11/jdk-9.0.1_linux-x64_bin.tar.gz
       dest: /home/vagrant/jdk-9.0.1_linux-x64_bin.tar.gz
-      headers: Cookie=oraclelicense=accept-securebackup-cookie
+      headers: "Cookie:oraclelicense=accept-securebackup-cookie"
   - name: Have Java 9 unpacked
     unarchive:
       src: /home/vagrant/jdk-9.0.1_linux-x64_bin.tar.gz
