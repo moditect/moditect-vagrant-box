@@ -25,14 +25,14 @@
       creates: /home/vagrant/apache-maven-3.5.0
   - name: Have Java 9
     get_url:
-      url: http://download.oracle.com/otn-pub/java/jdk/9.0.1+11/jdk-9.0.1_linux-x64_bin.tar.gz
-      dest: /home/vagrant/jdk-9.0.1_linux-x64_bin.tar.gz
+      url: http://download.oracle.com/otn-pub/java/jdk/9.0.4+11/c2514751926b4512b076cc82f959763f/jdk-9.0.4_linux-x64_bin.tar.gz
+      dest: /home/vagrant/jdk-9.0.4_linux-x64_bin.tar.gz
       headers: "Cookie:oraclelicense=accept-securebackup-cookie"
   - name: Have Java 9 unpacked
     unarchive:
-      src: /home/vagrant/jdk-9.0.1_linux-x64_bin.tar.gz
+      src: /home/vagrant/jdk-9.0.4_linux-x64_bin.tar.gz
       dest: /home/vagrant
-      creates: /home/vagrant/jdk-9.0.1
+      creates: /home/vagrant/jdk-9.0.4
   - name: Have Maven as alternative
     alternatives:
       name: mvn
@@ -42,12 +42,12 @@
     alternatives:
       name: java
       link: /usr/bin/java
-      path: /home/vagrant/jdk-9.0.1/bin/java
+      path: /home/vagrant/jdk-9.0.4/bin/java
   - name: Have javac 9 as alternative
     alternatives:
       name: javac
       link: /usr/bin/javac
-      path: /home/vagrant/jdk-9.0.1/bin/javac
+      path: /home/vagrant/jdk-9.0.4/bin/javac
   - name: Have docker repo
     shell:  'dnf config-manager \
       --add-repo \
